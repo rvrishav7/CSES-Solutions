@@ -1,0 +1,47 @@
+Problem: https://cses.fi/problemset/task/1635/
+
+// Solutions
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define MOD 1000000007
+ll dp[1000005];
+
+ll fun(vector<ll>&ar, ll &n, ll sum){
+	if(sum==0)
+		return 1;
+	if(sum<0)
+		return 0;
+	if(dp[sum]!=-1)
+		return dp[sum];
+	ll ans=0;
+	for(int i=0;i<n;i++)
+		ans=((ans%MOD)+(fun(ar,n,sum-ar[i]))%MOD)%MOD;
+	return dp[sum]=(ans%MOD);
+}
+void memoization(vector<ll>&ar, ll &n, ll sum){
+	memset(dp,-1,sizeof(dp));
+	cout<<fun(ar,n,sum);
+}
+void tabular(vector<ll>&ar, ll &n, ll &sum){
+	dp[0]=1;
+	for(int x=1;x<=sum;x++){
+		dp[x]=0;
+		for(int i=0;i<n;i++){
+			if(x<ar[i])
+				continue;
+			dp[x]=((dp[x])+(dp[x-ar[i]]))%MOD;
+		}
+	}
+	cout<<dp[sum];	
+}
+int main() {
+    ll sum,n;
+    cin>>n>>sum;
+    vector<ll>ar(n);
+    for(int i=0;i<n;i++)
+    	cin>>ar[i];
+    //memoization(ar,n,sum);
+    tabular(ar,n,sum);
+    return 0;
+}
