@@ -1,6 +1,6 @@
 /*
-Grid Paths
-Problem Link: hhttps://csedps.fi/problemset/task/1638/
+Removing Digits
+Problem Link: hhttps://csedps.fi/problemset/task/1637
 */
 
 #include<bits/stdc++.h>
@@ -8,27 +8,53 @@ using namespace std;
 #define ll long long int
 #define MOD 1000000007
 int dp[1000001];
-int fun(vector<vector<char>>&grid,vector<vector<bool>>&visited, int n,int i, int j){
-	if(i<0||j<0||i==n||j==n)
+inline void getDigits(ll n, vector<bool>&digits){
+	while(n){
+		digits[n%10]=true;
+		n/=10;
+	}
+}
+int fun(ll n){
+	if(n==0)
 		return 0;
-	if(i==n-1&&j==n-1)
-		return 1;
-	if(visited[i][j]||grid[i][j]=='*')
-		return 0;
-	return fun(grid,visited,n,i+1,j)+fun(grid,visited,n,i,j+1);
+	if(dp[n]!=-1)
+		return dp[n];
+	vector<bool>digits(10,false);
+	getDigits(n,digits);
+	int temp=INT_MAX;
+	for(int i=1;i<10;i++){
+		if(digits[i])
+			temp=min(temp,fun(n-i));
+	}
+	return dp[n]=1+temp;
+}
+void memoization(ll n){
+	memset(dp,-1,sizeof(dp));
+	cout<<fun(n);
+}
+void tabular(int n){
+	dp[0]=0;
+	int digits[10];
+	for(int i=1;i<=n;i++){
+		vector<bool>digits(10,false);
+		getDigits(i,digits);
+		int temp=INT_MAX;
+		for(int num=1;num<10;num++){
+		if(digits[num])
+			temp=min(temp,dp[i-num]);
+		}
+		dp[i]=temp+1;
+	}
+	cout<<dp[n];
 }
 int main() {
 	ios_base::sync_with_stdio(0);
     cin.tie(0);
     cout.tie(0);
-    
     ll n;
     cin>>n;
-    vector<vector<char>>grid(n,vector<char>(n));
-    vector<vector<bool>>visited(n,vector<bool>(n,false));
-    for(int i=0;i<n;i++)
-    	for(int j=0;j<n;j++)
-    		cin>>grid[i][j];
-    cout<<fun(grid,visited,n,0,0);
+
+    //memoization(n);
+    tabular(n);
     return 0;
 }
