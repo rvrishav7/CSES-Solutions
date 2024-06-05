@@ -1,6 +1,6 @@
 /*
 Removing Digits
-Problem Link: hhttps://csedps.fi/problemset/task/1637
+Problem Link: https://csedps.fi/problemset/task/1637
 */
 
 #include<bits/stdc++.h>
