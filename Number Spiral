@@ -1,0 +1,39 @@
+/*
+Number Spiral
+Problem Link: https://cses.fi/problemset/task/1071
+*/
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long int
+inline ll num(ll start, ll n, ll d){
+	ll ans;
+	ans= start+(((n-1)*(d)));
+	return ans;
+}
+ 
+ll fun(ll i, ll j){
+	if(i==1&&j==1)
+		return 1;
+	ll d=1;
+	if(j<=i){ // solve via horizontal
+		if(i&1)
+			return num(((i-1)*(i-1))+1,j,1);
+		else
+			return num(i*i,j,-1);
+	}
+	else{
+		if(j&1)
+			return  num(j*j,i,-1);
+		else
+			return num((j-1)*(j-1)+1,i,1);
+	}
+}
+int main(){
+	ll n,x,y;
+	cin>>n;
+	while(n--){
+		cin>>x>>y;
+		cout<<fun(x,y)<<endl;
+	}
+	return 0;
+}
