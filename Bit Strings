@@ -1,0 +1,27 @@
+/*
+Bit Strings
+Problem Link: https://cses.fi/problemset/task/1617
+*/
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define MOD 1000000007
+ll count(ll n){
+	ll ans=0;
+	while(n%5==0){
+		ans++;
+		n/=5;
+	}
+	return ans;
+}
+ 
+int main(){
+	ll n;
+	cin>>n;
+	ll ans=1;
+	while(n--){
+		ans= ((ans%MOD)*(2%MOD))%MOD;
+	}
+	cout<<ans;
+	return 0;
+}
