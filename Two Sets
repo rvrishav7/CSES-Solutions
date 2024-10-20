@@ -1,0 +1,49 @@
+/*
+Two Sets
+Problem Link: https://cses.fi/problemset/task/1092/
+*/
+#include<bits/stdc++.h>
+using namespace std;
+#define ll long long int
+#define MOD 1000000007
+ 
+void print(stack<int>&s){
+	cout<<s.size()<<endl;
+	while(!s.empty()){
+		int top=s.top();
+		cout<<top<<" ";
+		s.pop();
+	}
+	cout<<endl;
+}
+int main() {
+	ios_base::sync_with_stdio(0);
+    cin.tie(0);
+    cout.tie(0);
+    ll t=1;
+    //cin>>t;
+    while(t--){
+    	ll n,setvalue;
+    	cin>>n;
+    	setvalue=(n*(n+1))/2; // total sum 1+2+3...+n
+    	if(setvalue&1){
+    		cout<<"NO\n";
+    		continue;
+    	}
+    	setvalue/=2; //value of each set 
+    	stack<int>seta,setb;
+    	for(int i=n;i>=1;i--){
+    		if(setvalue>=i){
+    			seta.push(i);
+    			setvalue-=i;
+    		}
+    		else{
+    			setb.push(i);
+    		}
+    	}
+    	cout<<"YES\n";
+    	print(seta);
+    	print(setb);
+    }
+    return 0;
+}
